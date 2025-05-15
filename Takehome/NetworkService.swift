@@ -7,12 +7,12 @@
 
 import Foundation
 
- protocol NetworkService {
+protocol NetworkService {
 	func request<T: Decodable>(_ request: URLRequest) async throws -> T
 	func requestData(_ request: URLRequest) async throws -> Data
 }
 
- extension NetworkService {
+extension NetworkService {
 	/// Sends an HTTP request and decodes the response into the specified type.
 	///
 	/// - Parameter request: A `URLRequest` representing the HTTP request to be sent.
