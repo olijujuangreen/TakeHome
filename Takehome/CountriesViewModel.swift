@@ -1,3 +1,10 @@
+//
+//  CountriesViewModel.swift
+//  Takehome
+//
+//  Created by Olijujuan Green on 5/15/25
+//
+
 import Combine
 import Foundation
 import Observation

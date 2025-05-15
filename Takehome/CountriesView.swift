@@ -11,16 +11,12 @@ struct CountriesView: View {
 	@State private var viewModel = CountriesViewModel()
 
 	var body: some View {
-		NavigationView {
-			currentView
-				.navigationTitle("Countries")
-				.searchable(text: $viewModel.searchText, prompt: "Search by name or capital")
-				.task {
-					if case .idle = viewModel.viewState {
-						await viewModel.fetchCountries()
-					}
+		currentView
+			.task {
+				if case .idle = viewModel.viewState {
+					await viewModel.fetchCountries()
 				}
-		}
+			}
 	}
 
 	// MARK: - View Builders
@@ -66,8 +62,23 @@ struct CountriesView: View {
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
 		} else {
-			List(countries) { country in
-				CountryRowView(country: country)
+			VStack(spacing: .zero) {
+				Text("Countries")
+					.font(.largeTitle)
+					.fontWeight(.bold)
+					.padding(.vertical, 8)
+					.padding(.horizontal)
+					.frame(maxWidth: .infinity, alignment: .leading)
+
+				SearchBarView(
+					text: $viewModel.searchText,
+					prompt: "Search by name or capital"
+				)
+				.padding()
+
+				List(countries) { country in
+					CountryRowView(country: country)
+				}
 			}
 		}
 	}
