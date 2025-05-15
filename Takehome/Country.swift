@@ -7,51 +7,27 @@
 
 import Foundation
 
-struct Country: Codable {
-	let capital: String
-	let code: String
-	let currency: Currency
-	let flagImageUrl: String
-	let language: Language
+struct Country: Decodable, Identifiable {
 	let name: String
 	let region: String
+	let code: String
+	let capital: String
 
-	enum CodingKeys: String, CodingKey {
-		case capital
-		case code
-		case currency
-		case flagImageUrl = "flag"
-		case language
-		case name
-		case region
-	}
+	var id: String { code }
 
-	private init(
-		capital: String,
-		code: String,
-		currency: Currency,
-		flagImageUrl: String,
-		language: Language,
-		name: String,
-		region: String
-	) {
-		self.capital = capital
-		self.code = code
-		self.currency = currency
-		self.flagImageUrl = flagImageUrl
-		self.language = language
+	private init(name: String, region: String, code: String, capital: String) {
 		self.name = name
 		self.region = region
+		self.code = code
+		self.capital = capital
 	}
-}
 
-struct Currency: Codable {
-	let code: String
-	let name: String
-	let symbol: String
-}
-
-struct Language: Codable {
-	let code: String
-	let name: String
+	static func mock() -> Country {
+		Self(
+			name: "United States of America",
+			region: "NA",
+			code: "US",
+			capital: "Washington, D.C."
+		)
+	}
 }
