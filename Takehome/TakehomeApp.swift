@@ -11,7 +11,7 @@ import SwiftUI
 struct TakehomeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CountriesView()
         }
     }
 }
