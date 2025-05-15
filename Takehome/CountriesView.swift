@@ -11,12 +11,27 @@ struct CountriesView: View {
 	@State private var viewModel = CountriesViewModel()
 
 	var body: some View {
-		currentView
-			.task {
-				if case .idle = viewModel.viewState {
-					await viewModel.fetchCountries()
+		VStack(spacing: .zero) {
+			Text("Countries")
+				.font(.largeTitle)
+				.fontWeight(.bold)
+				.padding(.vertical, 8)
+				.padding(.horizontal)
+				.frame(maxWidth: .infinity, alignment: .leading)
+
+			SearchBarView(
+				text: $viewModel.searchText,
+				prompt: "Search by name or capital"
+			)
+			.padding()
+
+			currentView
+				.task {
+					if case .idle = viewModel.viewState {
+						await viewModel.fetchCountries()
+					}
 				}
-			}
+		}
 	}
 
 	// MARK: - View Builders
@@ -62,23 +77,8 @@ struct CountriesView: View {
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 			}
 		} else {
-			VStack(spacing: .zero) {
-				Text("Countries")
-					.font(.largeTitle)
-					.fontWeight(.bold)
-					.padding(.vertical, 8)
-					.padding(.horizontal)
-					.frame(maxWidth: .infinity, alignment: .leading)
-
-				SearchBarView(
-					text: $viewModel.searchText,
-					prompt: "Search by name or capital"
-				)
-				.padding()
-
-				List(countries) { country in
-					CountryRowView(country: country)
-				}
+			List(countries) { country in
+				CountryRowView(country: country)
 			}
 		}
 	}
